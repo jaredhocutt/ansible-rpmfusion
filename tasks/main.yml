@@ -1,0 +1,166 @@
+---
+
+- name: Copy GPG keys
+  copy:
+    src: "{{ item }}"
+    dest: /etc/pki/rpm-gpg/
+    owner: root
+    group: root
+    mode: 0644
+  with_fileglob: "{{ role_path }}/files/gpgkeys/*"
+  become: yes
+
+- name: Create yum repositories
+  yum_repository:
+    name: "{{ item.name }}"
+    description: "{{ item.description }}"
+    metalink: "{{ item.metalink }}"
+    enabled: "{{ item.enabled }}"
+    gpgcheck: "{{ item.gpgcheck }}"
+    gpgkey: "{{ item.gpgkey }}"
+    state: present
+  with_items:
+    ############################################################################
+    # rpmfusion-free
+    ############################################################################
+    - name: rpmfusion-free
+      description: RPM Fusion for Fedora $releasever - Free
+      metalink: https://mirrors.rpmfusion.org/metalink?repo=free-fedora-$releasever&arch=$basearch
+      enabled: 1
+      gpgcheck: d
+      gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-free-fedora-$releasever
+
+    - name: rpmfusion-free-debuginfo
+      description: RPM Fusion for Fedora $releasever - Free - Debug
+      metalink: https://mirrors.rpmfusion.org/metalink?repo=free-fedora-debug-$releasever&arch=$basearch
+      enabled: 0
+      gpgcheck: d
+      gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-free-fedora-$releasever
+
+    - name: rpmfusion-free-source
+      description: RPM Fusion for Fedora $releasever - Free - Source
+      metalink: https://mirrors.rpmfusion.org/metalink?repo=free-fedora-source-$releasever&arch=$basearch
+      enabled: 0
+      gpgcheck: d
+      gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-free-fedora-$releasever
+
+    ############################################################################
+    # rpmfusion-free-updates
+    ############################################################################
+    - name: rpmfusion-free-updates
+      description: RPM Fusion for Fedora $releasever - Free - Updates
+      metalink: https://mirrors.rpmfusion.org/metalink?repo=free-fedora-updates-released-$releasever&arch=$basearch
+      enabled: yes
+      gpgcheck: yes
+      gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-free-fedora-$releasever
+
+    - name: rpmfusion-free-updates-debuginfo
+      description: RPM Fusion for Fedora $releasever - Free - Updates Debug
+      metalink: https://mirrors.rpmfusion.org/metalink?repo=free-fedora-updates-released-debug-$releasever&arch=$basearch
+      enabled: no
+      gpgcheck: yes
+      gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-free-fedora-$releasever
+
+    - name: rpmfusion-free-updates-source
+      description: RPM Fusion for Fedora $releasever - Free - Updates Source
+      metalink: https://mirrors.rpmfusion.org/metalink?repo=free-fedora-updates-released-source-$releasever&arch=$basearch
+      enabled: no
+      gpgcheck: yes
+      gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-free-fedora-$releasever
+
+    ############################################################################
+    # rpmfusion-free-updates-testing
+    ############################################################################
+    - name: rpmfusion-free-updates-testing
+      description: RPM Fusion for Fedora $releasever - Free - Test Updates
+      metalink: https://mirrors.rpmfusion.org/metalink?repo=free-fedora-updates-testing-$releasever&arch=$basearch
+      enabled: no
+      gpgcheck: yes
+      gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-free-fedora-$releasever
+
+    - name: rpmfusion-free-updates-testing-debuginfo
+      description: RPM Fusion for Fedora $releasever - Free - Test Updates Debug
+      metalink: https://mirrors.rpmfusion.org/metalink?repo=free-fedora-updates-testing-debug-$releasever&arch=$basearch
+      enabled: no
+      gpgcheck: yes
+      gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-free-fedora-$releasever
+
+    - name: rpmfusion-free-updates-testing-source
+      description: RPM Fusion for Fedora $releasever - Free - Test Updates Source
+      metalink: https://mirrors.rpmfusion.org/metalink?repo=free-fedora-updates-testing-source-$releasever&arch=$basearch
+      enabled: no
+      gpgcheck: yes
+      gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-free-fedora-$releasever
+
+    ############################################################################
+    # rpmfusion-nonfree
+    ############################################################################
+    - name: rpmfusion-nonfree
+      description: RPM Fusion for Fedora $relasever - Nonfree
+      metalink: https://mirrors.rpmfusion.org/metalink?repo=nonfree-fedora-$releasever&arch=$basearch
+      enabled: 1
+      gpgcheck: d
+      gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-nonfree-fedora-$releasever
+
+    - name: rpmfusion-nonfree-debuginfo
+      description: RPM Fusion for Fedora $releasever - Nonfree - Debug
+      metalink: https://mirrors.rpmfusion.org/metalink?repo=nonfree-fedora-debug-$releasever&arch=$basearch
+      enabled: 0
+      gpgcheck: d
+      gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-nonfree-fedora-$releasever
+
+    - name: rpmfusion-nonfree-source
+      description: RPM Fusion for Fedora $releasever - Nonfree - Source
+      metalink: https://mirrors.rpmfusion.org/metalink?repo=nonfree-fedora-source-$releasever&arch=$basearch
+      enabled: 0
+      gpgcheck: d
+      gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-nonfree-fedora-$releasever
+
+    ############################################################################
+    # rpmfusion-nonfree-updates
+    ############################################################################
+    - name: rpmfusion-nonfree-updates
+      description: RPM Fusion for Fedora $releasever - Nonfree - Updates
+      metalink: https://mirrors.rpmfusion.org/metalink?repo=nonfree-fedora-updates-released-$releasever&arch=$basearch
+      enabled: 1
+      gpgcheck: 1
+      gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-nonfree-fedora-$releasever
+
+    - name: rpmfusion-nonfree-updates-debuginfo
+      description: RPM Fusion for Fedora $releasever - Nonfree - Updates Debug
+      metalink: https://mirrors.rpmfusion.org/metalink?repo=nonfree-fedora-updates-released-debug-$releasever&arch=$basearch
+      enabled: 0
+      gpgcheck: 1
+      gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-nonfree-fedora-$releasever
+
+    - name: rpmfusion-nonfree-updates-source
+      description: RPM Fusion for Fedora $releasever - Nonfree - Updates Source
+      metalink: https://mirrors.rpmfusion.org/metalink?repo=nonfree-fedora-updates-released-source-$releasever&arch=$basearch
+      enabled: 0
+      gpgcheck: 1
+      gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-nonfree-fedora-$releasever
+
+    ############################################################################
+    # rpmfusion-nonfree-updates-testing
+    ############################################################################
+    - name: rpmfusion-nonfree-updates-testing
+      description: RPM Fusion for Fedora $releasever - Nonfree - Test Updates
+      metalink: https://mirrors.rpmfusion.org/metalink?repo=nonfree-fedora-updates-testing-$releasever&arch=$basearch
+      enabled: 0
+      gpgcheck: 1
+      gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-nonfree-fedora-$releasever
+
+    - name: rpmfusion-nonfree-updates-testing-debuginfo
+      description: RPM Fusion for Fedora $releasever - Nonfree - Test Updates Debug
+      metalink: https://mirrors.rpmfusion.org/metalink?repo=nonfree-fedora-updates-testing-debug-$releasever&arch=$basearch
+      enabled: 0
+      gpgcheck: 1
+      gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-nonfree-fedora-$releasever
+
+    - name: rpmfusion-nonfree-updates-testing-source
+      description: RPM Fusion for Fedora $releasever - Nonfree - Test Updates Source
+      metalink: https://mirrors.rpmfusion.org/metalink?repo=nonfree-fedora-updates-testing-source-$releasever&arch=$basearch
+      enabled: 0
+      gpgcheck: 1
+      gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-rpmfusion-nonfree-fedora-$releasever
+  become: yes
