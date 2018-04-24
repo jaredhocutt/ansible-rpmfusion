@@ -1,4 +1,4 @@
-# Restic
+# RPMFusion
 
 Installs the RPMFusion repos.
 
