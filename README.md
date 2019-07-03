@@ -1,10 +1,13 @@
-# RPMFusion
+# RPM Fusion
 
-Installs the RPMFusion repos.
+This role handles installing the RPM Fusion repositories on a Fedora system.
 
 ## Requirements
 
-None
+The hosts you are targeting should have the following packages:
+
+- python >= 2.6
+- python-dnf
 
 ## Role Variables
 
@@ -17,7 +20,15 @@ None
 ## Example Playbook
 
 ```yaml
-- hosts: localhost
+- hosts: servers
   roles:
-      - jaredhocutt.rpmfusion
+    - role: jaredhocutt.rpmfusion
 ```
+
+## License
+
+MIT
+
+## Author Information
+
+Jared Hocutt (@jaredhocutt)
