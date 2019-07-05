@@ -8,6 +8,7 @@ galaxy_info:
 
   license: MIT
 
+  # Reason: dnf module
   min_ansible_version: 1.9
 
   platforms:
